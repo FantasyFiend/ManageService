@@ -6,11 +6,10 @@ import cn.siwangyin.system.Context;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Condition;
 import org.nutz.dao.Dao;
+import org.nutz.json.Json;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpSession;
 
 /**
  * Created by zwy on 2017/5/3.
@@ -38,12 +37,12 @@ public class Controller {
         return context;
     }
 
-    @RequestMapping("/checkLogin")
-    public Context checkLogin(HttpSession session) {
+    @RequestMapping("/saveUser")
+    public Context saveUser(@RequestParam("userJson") String json) {
         Context context = new Context();
-        SwyManager sm = (SwyManager) session.getAttribute("user");
+        SwyManager manager = Json.fromJson(SwyManager.class, json);
+        dao.update(manager);
         context.setFlag(true);
-        context.setObj(sm);
         return context;
     }
 
