@@ -13,7 +13,7 @@ public class Context{
 
     private Object obj;
 
-    private List<Object> list;
+    private List<?> list;
 
     public boolean getFlag() {
         return flag;
@@ -39,11 +39,15 @@ public class Context{
         this.obj = obj;
     }
 
-    public List<Object> getList() {
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public List<?> getList() {
         return list;
     }
 
-    public void setList(List<Object> list) {
+    public void setList(List<?> list) {
         this.list = list;
     }
 }

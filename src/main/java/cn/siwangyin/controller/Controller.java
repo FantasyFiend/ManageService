@@ -30,6 +30,14 @@ public class Controller {
         return context;
     }
 
+    @RequestMapping("/queryUser")
+    public Context queryUser() {
+        Context context = new Context();
+        context.setFlag(true);
+        context.setList(dao.query(SwyManager.class, null));
+        return context;
+    }
+
     @RequestMapping("/checkLogin")
     public Context checkLogin(HttpSession session) {
         Context context = new Context();
