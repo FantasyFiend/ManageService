@@ -2,6 +2,8 @@ package cn.siwangyin.controller;
 
 import cn.siwangyin.dao.CMSDao;
 import cn.siwangyin.domainObject.SwyManager;
+import cn.siwangyin.domainObject.SwyNavType;
+import cn.siwangyin.domainObject.SwyTag;
 import cn.siwangyin.system.Context;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Condition;
@@ -42,8 +44,46 @@ public class Controller {
         Context context = new Context();
         SwyManager manager = Json.fromJson(SwyManager.class, json);
         dao.update(manager);
+        context.setObj(manager);
         context.setFlag(true);
         return context;
     }
 
+    @RequestMapping("/addUser")
+    public Context addUser(@RequestParam("userJson") String json) {
+        Context context = new Context();
+        SwyManager manager = Json.fromJson(SwyManager.class, json);
+        manager = dao.insert(manager);
+        context.setObj(manager);
+        context.setFlag(true);
+        return context;
+    }
+
+    @RequestMapping("/queryNav")
+    public Context queryNav() {
+        Context context = new Context();
+        context.setFlag(true);
+        context.setList(dao.query(SwyNavType.class, null));
+        return context;
+    }
+
+    @RequestMapping("/queryNavTags" +
+            "")
+    public Context queryNavTags() {
+        Context context = new Context();
+        Condition cnd = Cnd.where("state","=",'Y').and("parentId", "=", 0);
+        context.setFlag(true);
+        context.setList(dao.query(SwyTag.class, cnd));
+        return context;
+    }
+
+    @RequestMapping("/saveNav")
+    public Context saveNav(@RequestParam("userJson") String json) {
+        Context context = new Context();
+        SwyNavType type = Json.fromJson(SwyNavType.class, json);
+        dao.update(type);
+        context.setObj(type);
+        context.setFlag(true);
+        return context;
+    }
 }
