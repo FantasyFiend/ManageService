@@ -86,4 +86,15 @@ public class Controller {
         context.setFlag(true);
         return context;
     }
+
+    @RequestMapping("/addNav")
+    public Context addNav(@RequestParam("navJson") String json) {
+        Context context = new Context();
+        SwyNavType type = Json.fromJson(SwyNavType.class, json);
+        type = dao.insert(type);
+        context.setObj(type);
+        context.setFlag(true);
+
+        return context;
+    }
 }
