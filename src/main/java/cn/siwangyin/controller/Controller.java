@@ -67,8 +67,7 @@ public class Controller {
         return context;
     }
 
-    @RequestMapping("/queryNavTags" +
-            "")
+    @RequestMapping("/queryNavTags")
     public Context queryNavTags() {
         Context context = new Context();
         Condition cnd = Cnd.where("state","=",'Y').and("parentId", "=", 0);
@@ -78,9 +77,10 @@ public class Controller {
     }
 
     @RequestMapping("/saveNav")
-    public Context saveNav(@RequestParam("userJson") String json) {
+    public Context saveNav(@RequestParam("navJson") String json, @RequestParam("tagIds") String tagIds) {
         Context context = new Context();
         SwyNavType type = Json.fromJson(SwyNavType.class, json);
+        type.setTagIds(tagIds);
         dao.update(type);
         context.setObj(type);
         context.setFlag(true);
@@ -88,13 +88,41 @@ public class Controller {
     }
 
     @RequestMapping("/addNav")
-    public Context addNav(@RequestParam("navJson") String json) {
+    public Context addNav(@RequestParam("navJson") String json, @RequestParam("tagIds") String tagIds) {
         Context context = new Context();
         SwyNavType type = Json.fromJson(SwyNavType.class, json);
+        type.setTagIds(tagIds);
         type = dao.insert(type);
         context.setObj(type);
         context.setFlag(true);
+        return context;
+    }
 
+    @RequestMapping("/queryTag")
+    public Context queryTag() {
+        Context context = new Context();
+        context.setFlag(true);
+        context.setList(dao.query(SwyTag.class, null));
+        return context;
+    }
+
+    @RequestMapping("/addTag")
+    public Context addTag(@RequestParam("tagJson") String json) {
+        Context context = new Context();
+        SwyTag tag = Json.fromJson(SwyTag.class, json);
+        tag = dao.insert(tag);
+        context.setObj(tag);
+        context.setFlag(true);
+        return context;
+    }
+
+    @RequestMapping("/saveTag")
+    public Context saveTag(@RequestParam("tagJson") String json) {
+        Context context = new Context();
+        SwyTag tag = Json.fromJson(SwyTag.class, json);
+        dao.update(tag);
+        context.setObj(tag);
+        context.setFlag(true);
         return context;
     }
 }
