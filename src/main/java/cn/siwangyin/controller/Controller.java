@@ -1,10 +1,7 @@
 package cn.siwangyin.controller;
 
 import cn.siwangyin.dao.CMSDao;
-import cn.siwangyin.domainObject.SwyCommodity;
-import cn.siwangyin.domainObject.SwyManager;
-import cn.siwangyin.domainObject.SwyNavType;
-import cn.siwangyin.domainObject.SwyTag;
+import cn.siwangyin.domainObject.*;
 import cn.siwangyin.system.Context;
 import cn.siwangyin.system.NameTextTag;
 import org.nutz.dao.Cnd;
@@ -181,6 +178,92 @@ public class Controller {
         commodity.setDetailHtml(detailHtml);
         dao.update(commodity);
         context.setObj(commodity);
+        context.setFlag(true);
+        return context;
+    }
+
+    @RequestMapping("/queryArticleSeries")
+    public Context queryArticleSeries() {
+        Context context = new Context();
+        context.setFlag(true);
+        context.setList(dao.query(SwyArticleSeries.class, null));
+        return context;
+    }
+
+    @RequestMapping("/addArticleSeries")
+    public Context addArticleSeries(@RequestParam("json") String json) {
+        Context context = new Context();
+        SwyArticleSeries series = Json.fromJson(SwyArticleSeries.class, json);
+        series = dao.insert(series);
+        context.setObj(series);
+        context.setFlag(true);
+        return context;
+    }
+
+    @RequestMapping("/saveArticleSeries")
+    public Context saveArticleSeries(@RequestParam("json") String json) {
+        Context context = new Context();
+        SwyArticleSeries series = Json.fromJson(SwyArticleSeries.class, json);
+        dao.update(series);
+        context.setObj(series);
+        context.setFlag(true);
+        return context;
+    }
+
+    @RequestMapping("/queryArticle")
+    public Context queryArticle() {
+        Context context = new Context();
+        context.setFlag(true);
+        context.setList(dao.query(SwyArticle.class, null));
+        return context;
+    }
+
+    @RequestMapping("/addArticle")
+    public Context addArticle(@RequestParam("json") String json, @RequestParam("content") String content) {
+        Context context = new Context();
+        SwyArticle article = Json.fromJson(SwyArticle.class, json);
+        article.setContent(content);
+        article = dao.insert(article);
+        context.setObj(article);
+        context.setFlag(true);
+        return context;
+    }
+
+    @RequestMapping("/saveArticle")
+    public Context saveArticle(@RequestParam("json") String json, @RequestParam("content") String content) {
+        Context context = new Context();
+        SwyArticle article = Json.fromJson(SwyArticle.class, json);
+        article.setContent(content);
+        dao.update(article);
+        context.setObj(article);
+        context.setFlag(true);
+        return context;
+    }
+
+    @RequestMapping("/queryNews")
+    public Context queryNews() {
+        Context context = new Context();
+        context.setFlag(true);
+        context.setList(dao.query(SwyNewsType.class, null));
+        return context;
+    }
+
+    @RequestMapping("/addNews")
+    public Context addNews(@RequestParam("json") String json) {
+        Context context = new Context();
+        SwyNewsType news = Json.fromJson(SwyNewsType.class, json);
+        news = dao.insert(news);
+        context.setObj(news);
+        context.setFlag(true);
+        return context;
+    }
+
+    @RequestMapping("/saveNews")
+    public Context saveNews(@RequestParam("json") String json) {
+        Context context = new Context();
+        SwyNewsType news = Json.fromJson(SwyNewsType.class, json);
+        dao.update(news);
+        context.setObj(news);
         context.setFlag(true);
         return context;
     }
