@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -223,6 +224,7 @@ public class Controller {
         Context context = new Context();
         SwyArticle article = Json.fromJson(SwyArticle.class, json);
         article.setContent(content);
+        article.setTime(new Date());
         article = dao.insert(article);
         context.setObj(article);
         context.setFlag(true);
