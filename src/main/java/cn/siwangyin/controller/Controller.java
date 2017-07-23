@@ -162,10 +162,9 @@ public class Controller {
     }
 
     @RequestMapping("/addCommodity")
-    public Context addCommodity(@RequestParam("json") String json, @RequestParam("detailHtml") String detailHtml) {
+    public Context addCommodity(@RequestParam("json") String json) {
         Context context = new Context();
         SwyCommodity commodity = Json.fromJson(SwyCommodity.class, json);
-        commodity.setDetailHtml(detailHtml);
         commodity = dao.insert(commodity);
         context.setObj(commodity);
         context.setFlag(true);
@@ -173,10 +172,9 @@ public class Controller {
     }
 
     @RequestMapping("/saveCommodity")
-    public Context saveCommodity(@RequestParam("json") String json, @RequestParam("detailHtml") String detailHtml) {
+    public Context saveCommodity(@RequestParam("json") String json) {
         Context context = new Context();
         SwyCommodity commodity = Json.fromJson(SwyCommodity.class, json);
-        commodity.setDetailHtml(detailHtml);
         dao.update(commodity);
         context.setObj(commodity);
         context.setFlag(true);
@@ -220,10 +218,9 @@ public class Controller {
     }
 
     @RequestMapping("/addArticle")
-    public Context addArticle(@RequestParam("json") String json, @RequestParam("content") String content) {
+    public Context addArticle(@RequestParam("json") String json) {
         Context context = new Context();
         SwyArticle article = Json.fromJson(SwyArticle.class, json);
-        article.setContent(content);
         article.setTime(new Date());
         article = dao.insert(article);
         context.setObj(article);
@@ -232,10 +229,9 @@ public class Controller {
     }
 
     @RequestMapping("/saveArticle")
-    public Context saveArticle(@RequestParam("json") String json, @RequestParam("content") String content) {
+    public Context saveArticle(@RequestParam("json") String json) {
         Context context = new Context();
         SwyArticle article = Json.fromJson(SwyArticle.class, json);
-        article.setContent(content);
         dao.update(article);
         context.setObj(article);
         context.setFlag(true);
